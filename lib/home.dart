@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:ask/blocs/ask_bloc.dart';
 import 'package:ask/repositorys/chat_repository.dart';
@@ -255,72 +256,80 @@ class _HomeState extends State<Home> {
 
   Widget _buildTextField(AskBloc askBloc) {
     bool isEnabled = false;
-    return ClipRRect(
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
-        decoration: const BoxDecoration(
-          border: Border(
-              top: BorderSide(
-            color: Color.fromRGBO(15, 15, 19, 1.0),
-            width: 2,
-          )),
-          color: Color.fromRGBO(23, 23, 27, 1.0),
-        ),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: TextField(
-                maxLines: 1,
-                focusNode: _focusNode,
-                style: const TextStyle(color: Color.fromRGBO(51, 51, 51, 1.0)),
-                keyboardType: TextInputType.text,
-                controller: _textEditingController,
-                decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  hintText: "질문을 입력 해주세요",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+    try {
+      return ClipRRect(
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
+          decoration: const BoxDecoration(
+            border: Border(
+                top: BorderSide(
+              color: Color.fromRGBO(15, 15, 19, 1.0),
+              width: 2,
+            )),
+            color: Color.fromRGBO(23, 23, 27, 1.0),
+          ),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  enabled: kIsWeb ? false : true,
+                  maxLines: 1,
+                  focusNode: _focusNode,
+                  style:
+                      const TextStyle(color: Color.fromRGBO(51, 51, 51, 1.0)),
+                  keyboardType: TextInputType.text,
+                  controller: _textEditingController,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
+                    hintText: kIsWeb
+                        ? 'Web 플랫폼 키보드 에러 문제로 비활성화 하였습니다.'
+                        : '질문을 입력 해주세요',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-                onSubmitted: (String text) {
-                  if (text.isNotEmpty) {
-                    askBloc.add(SendEvent(text, 0));
-                    _textEditingController.clear();
-                  }
-                },
-                onChanged: (text) {
-                  setState(() {
-                    isEnabled = text.isNotEmpty;
-                  });
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-              child: FittedBox(
-                child: IconButton(
-                  color: const Color.fromRGBO(27, 100, 218, 1.0),
-                  disabledColor: Colors.grey,
-                  icon: const Icon(
-                    Icons.send,
-                  ),
-                  onPressed: _textEditingController.text.isNotEmpty
-                      ? () {
-                          askBloc
-                              .add(SendEvent(_textEditingController.text, 0));
-                          _textEditingController.clear();
-                        }
-                      : null,
+                  onSubmitted: (String text) {
+                    if (text.isNotEmpty) {
+                      askBloc.add(SendEvent(text, 0));
+                      _textEditingController.clear();
+                    }
+                  },
+                  onChanged: (text) {
+                    setState(() {
+                      isEnabled = text.isNotEmpty;
+                    });
+                  },
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: FittedBox(
+                  child: IconButton(
+                    color: const Color.fromRGBO(27, 100, 218, 1.0),
+                    disabledColor: Colors.grey,
+                    icon: const Icon(
+                      Icons.send,
+                    ),
+                    onPressed: _textEditingController.text.isNotEmpty
+                        ? () {
+                            askBloc
+                                .add(SendEvent(_textEditingController.text, 0));
+                            _textEditingController.clear();
+                          }
+                        : null,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
