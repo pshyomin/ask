@@ -1,16 +1,6 @@
-# ask
+# 무엇이든 물어보세요
 
-A new Flutter project.
+ChatGPT (OpenAI QnA API) 를 이용한 QnA Chating 앱입니다.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot_1679815639](https://user-images.githubusercontent.com/123443915/227761640-5b72f7b6-e5df-462e-bb08-b24a8ce27347.png)
